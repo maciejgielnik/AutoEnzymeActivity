@@ -88,7 +88,7 @@ zoom_plot <- ggplot(data = zoomed_data, mapping = aes(x = Time,
 
 ggsave(paste(samples_name[numb], powtorzonko, ".jpeg",sep=""), zoom_plot)
 }
-}
+
 
 ## lm
 fitting_data <- 0
@@ -110,4 +110,4 @@ fitting_data[1, 5] <- sd(fitting_data[,3])
 colnames(fitting_data)[5] <- ("SD v/[E]")
 
 write_xlsx (fitting_data, paste(samples_name[numb], "sum_up",".xlsx",sep=""))
-
+}
