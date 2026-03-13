@@ -1,26 +1,26 @@
 library(ggplot2)
 library(writexl)
 source("file_loader.R")
+library(tidyr)
 maindir <- getwd()
-?version
-R.version
 
 filenumber()
-filenames(2)
+filenames(10)
+## which file to load
+firstone <- fileloader(10)
 
 ## control parameters
 no_of_replicates <- 5
-no_of_samples <- 3
+no_of_samples <- 1
 #samples_name <- c("LDH_FT6_apo", "LDH_FT6_RV10", "LDH_FT6_RV20")
-samples_name <- c("CS_Q20_50uM", "CS_Q20_5uM", "CS_Q30_5n")
-enzyme_concentration <- 1/1000000000  ## CS 1 LDH 2
+samples_name <- c("LDH_QC_6")
+enzyme_concentration <- 2/1000000000  ## CS 1 LDH 2
 no_of_points_for_lm <- 11
-epsilon <- 14000  ## CS 14000 LDH 6300
-wavelength <- 412  ##CS 412 LDH 340
+epsilon <- 6300  ## CS 14000 LDH 6300
+wavelength <- 340  ##CS 412 LDH 340
 
 
-## which file to load
-firstone <- fileloader(2)
+
 
 ##convert_time 
 {
@@ -124,4 +124,20 @@ write_xlsx (fitting_data, paste("sum_up", samples_name[numb], ".xlsx",sep=""))
 write_xlsx (clean_data, paste("clean_data_",samples_name[numb], ".xlsx",sep=""))
 setwd(maindir)
 }
+
+#df <- clean_data[,1:6]
+
+
+##alternative single fitting
+#df_long <- df %>%
+#  pivot_longer(cols = starts_with("D"), names_to = "variable", values_to = "D_value")
+#alt_fit <-  lm(D_value ~ Time, data = df_long)
+#summary(alt_fit)
+#ggplot(df_long, aes(x = Time, y = D_value)) +
+#  geom_point(aes(color = variable)) +  # Different colors for visibility
+#  geom_smooth(method = "lm", se = FALSE, color = "black") +  # One single fit
+#  theme_minimal() +
+#  labs(title = "Single Linear Fit Across All Data",
+#       x = "X", y = "Y Values")
+
 
